@@ -176,6 +176,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:blog_apps/model/GetCommnetByPostIdModel.dart';
 import 'package:blog_apps/model/postmodel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -189,8 +190,12 @@ class _PostScreenState extends State<PostScreen> {
 
   Future<List<PostModel>> fetchData() async {
     try {
+      var instance = await SharedPreferences.getInstance();
+     final String tokan = instance.get("LoginToken").toString();
       final response =
-          await http.get(Uri.parse('http://localhost:8081/api/blogApps/post'));
+          await http.get(Uri.parse('http://localhost:8081/api/blogApps/post'), headers: {
+            "Authorization" : 'Bearer $tokan'
+          });
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         List<PostModel> fetchedPosts = [];
@@ -319,7 +324,7 @@ class _PostScreenState extends State<PostScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.refresh),
-        onPressed: () {
+        onPressed: () async {
           fetchData(); // Fetch new data
         },
       ),

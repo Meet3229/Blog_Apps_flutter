@@ -29,6 +29,10 @@ class _LoginState extends State<Login> {
 
       if (response.statusCode == 200) {
         final user = Logintokanmodel.fromJson(jsonDecode(response.body));
+
+        var instance = await SharedPreferences.getInstance();
+        instance.setString("LoginToken" , user.idToken.toString());
+
         print('Logged in user: ${user.idToken}'); 
       } else {
         throw Exception('Failed to login');
