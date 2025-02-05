@@ -32,7 +32,6 @@ class _LoginState extends State<Login> {
 
         var instance = await SharedPreferences.getInstance();
         instance.setString("LoginToken" , user.idToken.toString());
-
         print('Logged in user: ${user.idToken}'); 
       } else {
         throw Exception('Failed to login');

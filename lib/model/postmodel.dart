@@ -129,7 +129,7 @@ class Id {
 
     @override
     String toString(){
-        return "$oid, ";
+        return "$oid";
     }
 }
 
