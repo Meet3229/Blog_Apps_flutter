@@ -2,6 +2,9 @@
 
 import 'dart:convert';
 
+import 'package:blog_apps/Utils/const_value.dart';
+import 'package:blog_apps/model/loginUserModel.dart';
+import 'package:blog_apps/model/logintoken.dart';
 import 'package:blog_apps/model/postmodel.dart';
 import 'package:blog_apps/screen/postScreen.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,12 +41,34 @@ class _dashboardState extends State<dashboard> {
       print(response.body);
       if (response.statusCode == 201) {
         print(tokan);
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PostScreen()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => PostScreen()));
         // Navigator.pop(context);
       } else {
         print('Failed to load posts: ${response.statusCode}');
       }
+    } catch (e) {}
+  }
+
+  Future<loginUserModel> _loginUserFetch() async {
+    try {
+      var instance = await SharedPreferences.getInstance();
+      var tokan = instance.get(LOGINTOKEN).toString();
+      var responce = await http.get(
+          Uri.parse('http://localhost:8081/api/account'),
+          headers: {"Authorization": 'Bearer $tokan'});
+
+      if (responce.statusCode == 200) {
+        var data = jsonDecode(responce.body);
+
+        return loginUserModel.fromJson(data);
+      } else {
+        throw Exception(
+            'Failed to load user data'); // Throw an exception for error handling
+      }
     } catch (e) {
+      throw Exception(
+          'Failed to fetch user data'); // Throw an exception for error handling
     }
   }
 
@@ -54,38 +79,98 @@ class _dashboardState extends State<dashboard> {
         title: Center(child: Text("dashboard")),
       ),
       drawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
-              child: Column(children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(
-                      "https://pics.craiyon.com/2024-09-09/AI3S0L6aQoayAyvI6MXRjg.webp"),
-                ),
-                Text("User Name ")
-              ]),
-            ),
-            Column(children: [
-              ListTile(
-                title: Text('Home'),
-                leading: Icon(Icons.home),
-              ),
-              ListTile(
-                title: Text('Add Post'),
-                leading: Icon(Icons.add_a_photo),
-              ),
-              ListTile(
-                title: Text('Update'),
-                leading: Icon(Icons.update),
-              ),
-              ListTile(
-                title: Text('delete Post'),
-                leading: Icon(Icons.delete),
-              )
-            ]),
-          ],
+        child: FutureBuilder<loginUserModel>(
+          future: _loginUserFetch(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error.toString()}'),
+              );
+            } else if (!snapshot.hasData) {
+              return Center(
+                child: Text('No data available'),
+              );
+            } else {
+              var user = snapshot.data!;
+              return ListView(
+                padding:
+                    EdgeInsets.zero, // Ensure zero padding to prevent overflow
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    color: Colors.blue,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: CircleAvatar(
+                            radius: 45,
+                            backgroundImage: NetworkImage(
+                              "https://pics.craiyon.com/2024-09-09/AI3S0L6aQoayAyvI6MXRjg.webp",
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          user.login.toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          user.email.toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                           '${user.firstName.toString()} ${user.lastName}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          user.createdDate.toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    onTap: ()async{
+                     Navigator.pushReplacement(
+                 context, MaterialPageRoute(builder: (contex) => PostScreen()));
+                    },
+                    title: Text('Home'),
+                    leading: Icon(Icons.home),
+                  ),
+                  ListTile(
+                    title: Text('Add Post'),
+                    leading: Icon(Icons.add_a_photo),
+                  ),
+                  ListTile(
+                    title: Text('Update'),
+                    leading: Icon(Icons.update),
+                  ),
+                  ListTile(
+                    title: Text('Delete Post'),
+                    leading: Icon(Icons.delete),
+                  ),
+                ],
+              );
+            }
+          },
         ),
       ),
       body: Column(
@@ -97,7 +182,7 @@ class _dashboardState extends State<dashboard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Login",
+                  "Crete a post ",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
