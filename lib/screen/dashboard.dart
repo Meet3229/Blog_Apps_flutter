@@ -50,7 +50,7 @@ class _dashboardState extends State<dashboard> {
     } catch (e) {}
   }
 
-  Future<loginUserModel> _loginUserFetch() async {
+  Future<loginUserModel> loginUserFetch() async {
     try {
       var instance = await SharedPreferences.getInstance();
       var tokan = instance.get(LOGINTOKEN).toString();
@@ -76,102 +76,7 @@ class _dashboardState extends State<dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("dashboard")),
-      ),
-      drawer: Drawer(
-        child: FutureBuilder<loginUserModel>(
-          future: _loginUserFetch(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('Error: ${snapshot.error.toString()}'),
-              );
-            } else if (!snapshot.hasData) {
-              return Center(
-                child: Text('No data available'),
-              );
-            } else {
-              var user = snapshot.data!;
-              return ListView(
-                padding:
-                    EdgeInsets.zero, // Ensure zero padding to prevent overflow
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    color: Colors.blue,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                          child: CircleAvatar(
-                            radius: 45,
-                            backgroundImage: NetworkImage(
-                              "https://pics.craiyon.com/2024-09-09/AI3S0L6aQoayAyvI6MXRjg.webp",
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          user.login.toString(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          user.email.toString(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                           '${user.firstName.toString()} ${user.lastName}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          user.createdDate.toString(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    onTap: ()async{
-                     Navigator.pushReplacement(
-                 context, MaterialPageRoute(builder: (contex) => PostScreen()));
-                    },
-                    title: Text('Home'),
-                    leading: Icon(Icons.home),
-                  ),
-                  ListTile(
-                    title: Text('Add Post'),
-                    leading: Icon(Icons.add_a_photo),
-                  ),
-                  ListTile(
-                    title: Text('Update'),
-                    leading: Icon(Icons.update),
-                  ),
-                  ListTile(
-                    title: Text('Delete Post'),
-                    leading: Icon(Icons.delete),
-                  ),
-                ],
-              );
-            }
-          },
-        ),
+        title: Center(child: Text("Add post")),
       ),
       body: Column(
         children: [
@@ -181,10 +86,7 @@ class _dashboardState extends State<dashboard> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "Crete a post ",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
+               
                 SizedBox(
                   height: 20,
                 ),

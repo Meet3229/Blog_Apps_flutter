@@ -1,4 +1,5 @@
 import 'package:blog_apps/screen/CommentScreen.dart';
+import 'package:blog_apps/screen/ProfilePage.dart';
 import 'package:blog_apps/screen/dashboard.dart';
 import 'package:blog_apps/screen/postScreen.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class _BottomNavBarscreenState extends State<BottomNavBarscreen> {
   final List<Widget> _children = [
     PostScreen(),
     dashboard(),
-    dashboard()
+    ProfilePage()
   ];
 
   void onTabTapped(int index) {
@@ -35,15 +36,15 @@ class _BottomNavBarscreenState extends State<BottomNavBarscreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Page One',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Page Two',
+            icon: Icon(Icons.add),
+            label: 'Add post',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Page Three',
+            icon: Icon(Icons.account_circle_sharp),
+            label: 'Profile',
           ),
         ],
       ),

@@ -1,62 +1,110 @@
 class GetCommnetByPostIdModel {
-  String? contant;
-  Post? post;
-  Id? iId;
+    GetCommnetByPostIdModel({
+        required this.contant,
+        required this.post,
+        required this.id,
+    });
 
-  GetCommnetByPostIdModel({this.contant, this.post, this.iId});
+    final String? contant;
+    final Post? post;
+    final Id? id;
 
-  GetCommnetByPostIdModel.fromJson(Map<String, dynamic> json) {
-    contant = json['contant'];
-    post = json['post'] != null ? new Post.fromJson(json['post']) : null;
-    iId = json['_id'] != null ? new Id.fromJson(json['_id']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['contant'] = this.contant;
-    if (this.post != null) {
-      data['post'] = this.post!.toJson();
+    GetCommnetByPostIdModel copyWith({
+        String? contant,
+        Post? post,
+        Id? id,
+    }) {
+        return GetCommnetByPostIdModel(
+            contant: contant ?? this.contant,
+            post: post ?? this.post,
+            id: id ?? this.id,
+        );
     }
-    if (this.iId != null) {
-      data['_id'] = this.iId!.toJson();
+
+    factory GetCommnetByPostIdModel.fromJson(Map<String, dynamic> json){ 
+        return GetCommnetByPostIdModel(
+            contant: json["contant"],
+            post: json["post"] == null ? null : Post.fromJson(json["post"]),
+            id: json["_id"] == null ? null : Id.fromJson(json["_id"]),
+        );
     }
-    return data;
-  }
-}
 
-class Post {
-  Id? iId;
-  String? sRef;
+    Map<String, dynamic> toJson() => {
+        "contant": contant,
+        "post": post?.toJson(),
+        "_id": id?.toJson(),
+    };
 
-  Post({this.iId, this.sRef});
-
-  Post.fromJson(Map<String, dynamic> json) {
-    iId = json['_id'] != null ? new Id.fromJson(json['_id']) : null;
-    sRef = json['_ref'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.iId != null) {
-      data['_id'] = this.iId!.toJson();
+    @override
+    String toString(){
+        return "$contant, $post, $id ";
     }
-    data['_ref'] = this.sRef;
-    return data;
-  }
 }
 
 class Id {
-  String? oid;
+    Id({
+        required this.oid,
+    });
 
-  Id({this.oid});
+    final String? oid;
 
-  Id.fromJson(Map<String, dynamic> json) {
-    oid = json['$oid'];
-  }
+    Id copyWith({
+        String? oid,
+    }) {
+        return Id(
+            oid: oid ?? this.oid,
+        );
+    }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$oid'] = this.oid;
-    return data;
-  }
+    factory Id.fromJson(Map<String, dynamic> json){ 
+        return Id(
+            oid: json["\u0024oid"],
+        );
+    }
+
+    Map<String, dynamic> toJson() => {
+        "\u0024oid": oid,
+    };
+
+    @override
+    String toString(){
+        return "$oid ";
+    }
+}
+
+class Post {
+    Post({
+        required this.id,
+        required this.ref,
+    });
+
+    final Id? id;
+    final String? ref;
+
+    Post copyWith({
+        Id? id,
+        String? ref,
+    }) {
+        return Post(
+            id: id ?? this.id,
+            ref: ref ?? this.ref,
+        );
+    }
+
+    factory Post.fromJson(Map<String, dynamic> json){ 
+        return Post(
+            id: json["_id"] == null ? null : Id.fromJson(json["_id"]),
+            ref: json["_ref"],
+        );
+    }
+
+    Map<String, dynamic> toJson() => {
+        "_id": id?.toJson(),
+        "_ref": ref,
+    };
+
+    @override
+    String toString(){
+        return "$id, $ref, ";
+    }
 }

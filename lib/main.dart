@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:blog_apps/screen/BottomNavBarscreen.dart';
 import 'package:blog_apps/screen/dashboard.dart';
 import 'package:blog_apps/screen/login.dart';
@@ -15,19 +17,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(
-    //   title: 'Flutter Demo',
-    //   theme: ThemeData(
-    //     colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-    //     useMaterial3: true,
-    //   ),
-    return   MaterialApp(
-      // Default theme setup
+    return MaterialApp(
+      title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Colors.deepPurple, // Default primary color
-        hintColor: Colors.blueAccent, // Default accent color
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent),
+        useMaterial3: true,
       ),
+
       
       home: Login()
     );
