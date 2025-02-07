@@ -8,7 +8,7 @@ import 'package:blog_apps/model/loginUserModel.dart';
 import 'package:blog_apps/model/postCreteUsergetModel.dart';
 import 'package:blog_apps/model/postmodel.dart';
 import 'package:blog_apps/screen/dashboard.dart';
-import 'package:blog_apps/screen/test.dart';
+import 'package:blog_apps/screen/post_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
