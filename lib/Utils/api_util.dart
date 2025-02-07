@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_web_libraries_in_flutter, unused_import, avoid_print, non_constant_identifier_names
+
 import 'dart:convert';
 import 'dart:js';
 import 'package:blog_apps/model/loginUserModel.dart';
