@@ -1,3 +1,4 @@
+import 'package:blog_apps/screen/BottomNavBarscreen.dart';
 import 'package:blog_apps/screen/dashboard.dart';
 import 'package:blog_apps/screen/login.dart';
 import 'package:blog_apps/screen/postScreen.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
       ),
       
-      home: PostScreen()
+      home: Login()
     );
   }
 }
