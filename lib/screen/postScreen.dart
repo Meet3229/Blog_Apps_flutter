@@ -413,7 +413,7 @@ class _PostScreenState extends State<PostScreen> {
                                                           decoration:
                                                               InputDecoration(
                                                             hintText:
-                                                                'Add a comment...',
+                                                                'Add a comment..!',
                                                             border:
                                                                 OutlineInputBorder(
                                                               borderRadius:
