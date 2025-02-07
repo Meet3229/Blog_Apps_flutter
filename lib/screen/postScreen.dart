@@ -217,6 +217,7 @@ class _PostScreenState extends State<PostScreen> {
                                   // ),
 
                                   child: Card(
+                                    color: Colors.white,
                                     margin: EdgeInsets.all(10.0),
                                     child: Padding(
                                       padding: EdgeInsets.all(10.0),
@@ -228,9 +229,11 @@ class _PostScreenState extends State<PostScreen> {
                                           Row(
                                             children: [
                                               CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                    "    replece url    "),
-                                                radius: 20.0,
+                                                backgroundImage:  user.email != null ?  NetworkImage(
+                                                    "    replece url    ") :
+                                                    NetworkImage(
+                                                    "    replece url    ")
+                                                
                                               ),
                                               SizedBox(width: 10.0),
                                               Text(
@@ -352,6 +355,7 @@ class _PostScreenState extends State<PostScreen> {
                                                   itemBuilder:
                                                       (context, commentIndex) {
                                                     return SwipeActionCell(
+                                                      backgroundColor: Colors.white,
                                                         key: ValueKey(index),
                                                         trailingActions: [
                                                           SwipeAction(
@@ -361,7 +365,12 @@ class _PostScreenState extends State<PostScreen> {
                                                                     .blue),
                                                             onTap:
                                                                 (handler) async {
-                                                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  PopupTextFieldExample()));
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              PopupTextFieldExample()));
                                                             },
                                                             color: Colors
                                                                 .transparent,
@@ -380,6 +389,7 @@ class _PostScreenState extends State<PostScreen> {
                                                                   .transparent)
                                                         ],
                                                         child: Card(
+                                                          // color: Colors.white,
                                                           child: Padding(
                                                             padding:
                                                                 const EdgeInsets
@@ -426,23 +436,6 @@ class _PostScreenState extends State<PostScreen> {
             Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (contex) => dashboard()));
           },
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: 0, // Replace with your selected index logic
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add),
-              label: 'Add Post',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
-              label: 'Account',
-            ),
-          ],
         ));
   }
 

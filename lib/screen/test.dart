@@ -102,7 +102,7 @@ class _PopupTextFieldExampleState extends State<PopupTextFieldExample> {
         leading: IconButton(
   icon: const Icon(Icons.arrow_back),
   onPressed: () {
-    Navigator.pop(context);
+    Navigator.of(context).pop();
   },
 ),
         title: Text('Popup with Editable TextField Example'),
